@@ -5,10 +5,12 @@ with pkgs.python38Packages;
 stdenv.mkDerivation {
   name = "python";
 
-  buildInputs = [
-    pip
+  buildInputs = with pkgs; [
+    bashInteractive
     python38Full
-    virtualenv
+    python38Packages.setuptools
+    python38Packages.pip
+    python38Packages.virtualenv
     # installing python packsges from nix won't work here
     # as python path will be wrong
   ];
