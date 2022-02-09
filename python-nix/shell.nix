@@ -1,25 +1,36 @@
-# https://nixos.wiki/wiki/Python
 { pkgs ? import <nixpkgs> {} }:
 
 let
-    python-deps = import ./nix/python-deps.nix { pkgs = pkgs; };
-    custom-python = python-deps.python;
+  cottonmouth = pkgs.python3Packages.buildPythonPackage {
+    name = "cottonmouth";
+    src = builtins.fetchGit {
+      url = "https://github.com/adamlwgriffiths/cottonmouth";
+      ref = "master";
+      rev = "34b20827200b41208b2e5a90b4d9c713a74e4939";
+    };
+  };
 in pkgs.mkShell {
-  buildInputs = with pkgs; [
-    bashInteractive
-    custom-python
+  nativeBuildInputs = with pkgs; [
+    gobject-introspection
   ];
+  buildInputs = with pkgs; [
+    (python38.withPackages (ps: with ps; [
+      pywebview
+      pygobject3
+      flask
+      flask-socketio
+      eventlet
+      cottonmouth
 
-  shellHook = ''
-    # python
-    # allow the use of wheels
-    SOURCE_DATE_EPOCH=$(date +%s)
-    echo -e "Creating python environment..."
-    export PYTHONDONTWRITEBYTECODE="True"
-    #virtualenv .venv > /dev/null
-
-    #export PATH=$PWD/.venv/bin:$PATH > /dev/null
-    #export PYTHONPATH=$PWD/.venv/lib/python38/site-packages > /dev/null
-    #export PYTHONPATH=$PWD:$PYTHONPATH > /dev/null
-  '';
+      flask-sockets
+      gevent
+      gevent-websocket
+      python-socketio
+    ]))
+    glib
+    gtk3
+    webkitgtk
+    pkgconfig
+    bashInteractive
+  ];
 }

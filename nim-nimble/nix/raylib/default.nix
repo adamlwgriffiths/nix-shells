@@ -39,7 +39,7 @@ stdenv.mkDerivation rec {
     ${lib.optionalString pulseSupport "patchelf --add-needed ${libpulseaudio}/lib/libpulse.so $out/lib/libraylib.so.${version}"}
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "raylib is a simple and easy-to-use library to enjoy videogames programming";
     homepage = "http://www.raylib.com/";
     license = licenses.zlib;
