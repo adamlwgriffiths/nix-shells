@@ -1,0 +1,11 @@
+{
+    "name": "test",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "miniflare": "^2.3.0"
+    },
+    "engines": {
+        "node": ">=16.7"
+    }
+}
