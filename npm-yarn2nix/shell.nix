@@ -4,7 +4,7 @@ let
   nodejs = pkgs.nodejs-16_x;
   yarn = pkgs.yarn.override { inherit nodejs; };
   yarn2nix-moretea = pkgs.yarn2nix-moretea.override { inherit nodejs yarn; };
-  npm-packages = mkYarnPackage {
+  npm-packages = pkgs.mkYarnPackage {
     name = "npm-packages";
     src = ./.;
     publishBinsFor = [
